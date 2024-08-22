@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Current Location</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        p {
+            margin-top: 15px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Get Your Current Location</h1>
+        <button id="getLocationButton">Get Location</button>
+        <p id="locationInfo"></p>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const button = document.getElementById('getLocationButton');
+            const locationInfo = document.getElementById('locationInfo');
+
+            button.addEventListener('click', () => {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        (position) => {
+                            const latitude = position.coords.latitude;
+                            const longitude = position.coords.longitude;
+                            console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+                            locationInfo.textContent = `Latitude: ${latitude}, Longitude: ${longitude}`;
+                        },
+                        (error) => {
+                            console.error('Error getting location: ', error);
+                            locationInfo.textContent = 'Unable to retrieve location.';
+                        }
+                    );
+                } else {
+                    console.log('Geolocation is not supported by this browser.');
+                    locationInfo.textContent = 'Geolocation is not supported by this browser.';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
